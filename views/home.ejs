@@ -45,7 +45,7 @@
                           <a href="/<%= post.id %>"> <%= post.title %> </a>
                         </h3>
                       </div>
-                      <p id="author" >by: <%= user.username %></p>
+                      <p id="author" >by: <%= post.user.username %></p>
                      </br>
                       <p id="post-content"><%= post.content %></p>
                    
@@ -58,8 +58,10 @@
                                             
                     
                     <footer id="post-footer" class="card-footer">
-                      <% if(user.id == post.user){ %>
-                      <a href="/<%= post.id %>" class="card-footer-item">Edit</a>
+                      <% if(typeof user != "undefined"){ %>
+                      <% if(user.id == post.user.id){ %>
+                      <a href="/<%= post.id %>/edit" class="card-footer-item">Edit</a>
+                      <% } %>
                       <% } %>
                       <a href="/<%= post.id %>" class="card-footer-item">Comment</a>
                      

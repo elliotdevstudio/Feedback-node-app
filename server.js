@@ -31,6 +31,7 @@ app.use(methodOverride("_method"));
 
 // session config
 app.use(session({
+
     // where to store the sessions in mongodb
     store: MongoStore.create({mongoUrl: process.env.MONGODB_URI}),
     // secret key is used to sign the cookie to say that it is valid
@@ -46,20 +47,23 @@ app.use(session({
 
 /* === Middleware === */
 
+
 // adds routes for navbar
 app.use(require("./utils/navlinks"));
+
 
 /* === Routes === */
 
 // == Default Routes
-/* app.get("/", function (req, res, next) {
-  return res.render("home");
-}); */
+
+
+
+
 app.use("/", controllers.post);
 app.use("/comments", controllers.comment);
 
 // == Auth
-app.use("/", controllers.auth);
+app.use("/signup", controllers.auth);
 
 /* === Server Listener === */
 app.listen(PORT, function () {

@@ -17,8 +17,14 @@ router.get("/", async function (req, res) {
     }
 });
 
+function isAuthenticated(req, res, next){
+    if (!User.isAuthenticated){
+        res.render('auth/login');
+    } 
+    next();
+};
 // Show
-router.get("/:id", function (req, res, next) {
+router.get("/:id", isAuthenticated, function (req, res, next) {
     Post.findById(req.params.id, function (error, post) {
         if (error) {
             req.error = error;
@@ -38,10 +44,11 @@ router.get("/:id", function (req, res, next) {
     });
 });
 
-// New
+/* New
 router.get("/new", function (req, res) {
     res.render("posts/new");
 });
+*/
 
 // Create
 router.post("/posts", async function (req, res, next) {
