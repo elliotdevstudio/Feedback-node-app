@@ -41,7 +41,7 @@ app.use(session({
     // config cookie
     cookie: {
         // maxAge is how long a cookie should be valid in ms
-        maxAge: 1000 * 60 * 60 * 24 * 7 * 2, // two weeks
+        maxAge: 1000 * 60 * 60 * 24  // one day
     }
 }));
 
@@ -51,20 +51,20 @@ app.use(session({
 // adds routes for navbar
 app.use(require("./utils/navlinks"));
 
-
+// global error handler
+function handleError(err, req, res, next){
+    res.json({err: err});
+}
 /* === Routes === */
 
 // == Default Routes
-
-
-
-
 app.use("/", controllers.post);
 app.use("/comments", controllers.comment);
 
 // == Auth
 app.use("/signup", controllers.auth);
 
+app.use(handleError);
 /* === Server Listener === */
 app.listen(PORT, function () {
     console.log(`Server is live and listening at localhost:${PORT}.`);

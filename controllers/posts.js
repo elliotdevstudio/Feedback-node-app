@@ -17,6 +17,7 @@ router.get("/", async function (req, res) {
     }
 });
 
+// ** TRY RENAMING AND RUNNING THIS 
 function isAuthenticated(req, res, next){
     if (!User.isAuthenticated){
         res.render('auth/login');
