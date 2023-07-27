@@ -5,6 +5,14 @@ const { Post, Comment, User } = require("../models");
 // base url === /
 
 // Index
+
+function isAuthenticated(req, res, next){
+    if (!User.isAuthenticated){
+        res.render('auth/login');
+    } 
+    next();
+};
+
 router.get("/", async function (req, res) {
     try {
         const allPosts = await Post.find({});
@@ -18,12 +26,7 @@ router.get("/", async function (req, res) {
 });
 
 // ** TRY RENAMING AND RUNNING THIS 
-function isAuthenticated(req, res, next){
-    if (!User.isAuthenticated){
-        res.render('auth/login');
-    } 
-    next();
-};
+
 // Show
 router.get("/:id", isAuthenticated, function (req, res, next) {
     Post.findById(req.params.id, function (error, post) {

@@ -8,7 +8,7 @@ const {User} = require("../models");
 // register form
 // GET /register
 router.get("/signup", function (req, res, next) {
-    return res.render("auth/signup");
+    res.render("auth/signup");
 });
 
 // create user
