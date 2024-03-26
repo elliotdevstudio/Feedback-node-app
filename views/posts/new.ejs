@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
         <!-- Head partial -->
-  <%- include('../partials/head.ejs', { page: "Create Post" } ) %>
+  <% include('../partials/head.ejs', { page: "Create Post" } ) %>
 
 <body class="has-navbar-fixed-top">
           <!-- Navbar Partial -->
-          <%- include('../partials/nav.ejs', { routes: [
+          <% include('../partials/nav.ejs', { routes: [
             { 
               href: "/",
               title: "Home",
@@ -14,7 +14,7 @@
               href: "/",
               title: "Logout",
             },] } ) %>
-  <!--<h2><%= user.username %></h2>  --->
+  
   <section class="hero is-small has-background is-link">
     <div id="hero-container" class="hero-body">
       <div id="title-container">
@@ -24,7 +24,7 @@
   </section>
 
   <div class="post-container" id="created-post" >
-    <form class="box" id="created-post" action="/posts" method="POST">
+    <form class="box" id="created-post" action="/new" method="POST">
       <div class="field">
         <label class="label">Title</label>
         <div class="control">

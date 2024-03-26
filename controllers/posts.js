@@ -5,17 +5,9 @@ const { Post, Comment, User } = require("../models");
 // base url === /
 
 // Index
-
-function isAuthenticated(req, res, next){
-    if (!User.isAuthenticated){
-        res.render('auth/login');
-    } 
-    next();
-};
-
 router.get("/", async function (req, res) {
     try {
-        const allPosts = await Post.find({});
+        const allPosts = await Post.find({}).populate("user");
         const context = {
             posts: allPosts,
         };
@@ -25,11 +17,15 @@ router.get("/", async function (req, res) {
     }
 });
 
-// ** TRY RENAMING AND RUNNING THIS 
-
 // Show
-router.get("/:id", isAuthenticated, function (req, res, next) {
+router.get("/:id", function (req, res, next) {
+    //check for user session
+    const currentUser = req.session.user
+    if (!currentUser){
+        return res.render('auth/login');
+    }
     Post.findById(req.params.id, function (error, post) {
+
         if (error) {
             req.error = error;
             return next();
@@ -44,26 +40,31 @@ router.get("/:id", isAuthenticated, function (req, res, next) {
                 comments: foundComments
             };
             return res.render("posts/show", context);
-        });
-    });
+        }).populate("user");
+    }).populate("user");
 });
 
-/* New
-router.get("/new", function (req, res) {
-    res.render("posts/new");
+// New
+router.get("/new", function (req, res, next) {
+    if (req.session.user) {
+    res.render("posts/new") }
+    else {
+        res.send('session validation failed');
+    }
 });
-*/
 
 // Create
-router.post("/posts", async function (req, res, next) {
+router.post("/new", async function (req, res, next) {
     try { // body == data incoming with a request
         const data = req.body;
-        data.user = req.session.currentUser.id;
+        console.log(req);
+        data.user = req.session.id;
         await Post.create(data);
+        console.log("Post successfully created");
         return res.redirect("/");
     } catch (error){
-        console.log(error);
         req.error = error;
+        console.log(error);
         return next();
     }
 });

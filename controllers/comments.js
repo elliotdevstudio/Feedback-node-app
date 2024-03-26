@@ -6,7 +6,7 @@ const { Post, Comment, User } = require("../models");
 router.post("/:id", async function (req, res, next) {
     try { // body == data incoming with a request
         const data = req.body;
-        data.user = req.session.currentUser.id;
+        data.user = req.session._id;
         data.post = req.params.id;
         await Comment.create(data);
         return res.redirect("/");

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
         <!-- Head partial -->
-  <%- include('../partials/head', { page: "Login" } ) %>
+  <% include('../partials/head', { page: "Login" } ) %>
 
 <body class="has-navbar-fixed-top">
 <!-- Navbar Partial -->
-          <%- include('../partials/nav', { routes: [
+          <% include('../partials/nav', { routes: [
             {
-                   
+              href: "/signup",
+              title: "Sign Up",
             }]} ) %>
 
           <section class="hero is-fullheight-with-navbar is-link">

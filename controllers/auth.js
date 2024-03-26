@@ -32,15 +32,15 @@ router.post("/signup", async function (req, res, next) {
         await User.create(req.body);
         return res.redirect("/login");
     } catch (error) {
-        console.log(error);
         req.error = error;
+        console.log(error);
         return next();
     }
 });
 
 // login form
 // GET /login
-router.get("/login", function (req, res, next) {
+router.get("/auth/login", function (req, res, next) {
     return res.render("auth/login");
 });
 
@@ -63,7 +63,7 @@ router.post("/login", async function (req, res, next) {
         }
         // --- if match -> issue cookie
         // add the user's authentication to the cookie
-        req.session.currentUser = {
+        req.session.id = {
             id: foundUser._id,
             username: foundUser.username,
         };
