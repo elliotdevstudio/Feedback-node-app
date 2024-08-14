@@ -16,10 +16,10 @@ const UserSchema = new mongoose.Schema(
             type: String,
             required: [true, "Please provide a password."],
         },
-        // avatar: {
-        //     type: String,
-        //     default: "https://media1.thehungryjpeg.com/thumbs2/ori_3575495_sdh07h7s5xnio2oxxakc7ign0f02gwn1so47qnrv_pencil-icon.jpg",
-        // },
+        avatar: {
+            type: String,
+            default: "https://media1.thehungryjpeg.com/thumbs2/ori_3575495_sdh07h7s5xnio2oxxakc7ign0f02gwn1so47qnrv_pencil-icon.jpg",
+        }
     },
     {
         timestamps: true,

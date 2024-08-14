@@ -9,7 +9,7 @@
     "dev": "open http://localhost:4000/ && concurrently --handle-input -n server,sass -c 'bgGreen.bold,bgMagenta.bold' 'npm:watch-nodemon' 'npm:watch-sass' rs",
     "devl": "google-chrome http://localhost:4000/ && concurrently --handle-input -n server,sass -c 'bgGreen.bold,bgMagenta.bold' 'npm:watch-nodemon' 'npm:watch-sass' rs",
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -34,6 +34,8 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.0",
-    "nodemon": "^3.0.1"
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.1",
+    "supertest": "^7.0.0"
   }
 }

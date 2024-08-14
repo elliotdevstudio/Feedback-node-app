@@ -1,11 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const { Post, Comment, User } = require("../models");
+// const isAuthenticated = require('../server');
 
 // base url === /
 
-// Index
-router.get("/", async function (req, res) {
+// const isAuthenticated = function isAuthenticated(req,res, next){
+//     if(req.session && req.session.user) {
+//     return true;
+//     } else {
+//     return false;
+//     }
+// };
+
+router.get("/", async function (req, res, next) {
+    console.log(req.session);
     try {
         const allPosts = await Post.find({}).populate("user");
         const context = {
@@ -14,16 +23,13 @@ router.get("/", async function (req, res) {
         return res.render("home", context);
     } catch (error) {
         console.log(error);
-    }
-});
+    } 
+  });
+
 
 // Show
 router.get("/:id", function (req, res, next) {
-    //check for user session
-    const currentUser = req.session.user
-    if (!currentUser){
-        return res.render('auth/login');
-    }
+   
     Post.findById(req.params.id, function (error, post) {
 
         if (error) {
@@ -44,21 +50,23 @@ router.get("/:id", function (req, res, next) {
     }).populate("user");
 });
 
-// New
-router.get("/new", function (req, res, next) {
-    if (req.session.user) {
-    res.render("posts/new") }
-    else {
-        res.send('session validation failed');
+//create
+router.get("/new", function (req, res) {
+    if(req.session.currentUser){ 
+        res.render("posts/new");
+    } else {
+        res.redirect("auth/login");
     }
+    
 });
 
 // Create
 router.post("/new", async function (req, res, next) {
+    if (!req.session.currentUser) res.redirect("auth/login");
     try { // body == data incoming with a request
         const data = req.body;
         console.log(req);
-        data.user = req.session.id;
+        data.user = req.session.currentUserser;
         await Post.create(data);
         console.log("Post successfully created");
         return res.redirect("/");
@@ -70,7 +78,7 @@ router.post("/new", async function (req, res, next) {
 });
 
 // Delete
-router.delete("/posts/:id", function (req, res, next) {
+router.delete("/:id", function (req, res, next) {
     Post.findByIdAndDelete(req.params.id, function (error, deletedPost) {
         if (error) {
             console.log(error);
@@ -124,4 +132,4 @@ router.put("/:id", function (req, res, next) {
     );
 });
 
-module.exports = router;
+module.exports = router

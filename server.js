@@ -6,6 +6,14 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
+//security modules
+// const morgan = require("morgan");
+// const rateLimit = require("express-rate-limit");
+// const helmet = require("helmet");
+// const mongoSanitize = require("express-mongo-sanitize");
+// const hpp = require("hpp");
+
+//look into MIME sniffing 
 /* === Internal modules === */
 const controllers = require("./controllers");
 
@@ -27,7 +35,7 @@ app.use(express.static("public"));
 // handle form data
 app.use(express.urlencoded({ extended: false }));
 
-// override request methods
+// override request methods -- include in URL
 app.use(methodOverride("_method"));
 
 // session config
@@ -36,6 +44,7 @@ app.use(session({
     // where to store the sessions in mongodb
     store: MongoStore.create({mongoUrl: process.env.MONGODB_URI}),
     // secret key is used to sign the cookie to say that it is valid
+    collection: 'sessions',
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
@@ -48,20 +57,36 @@ app.use(session({
 
 /* === Middleware === */
 
+app.use(function (req, res, next){
+    req.session.example = "hello I am an added property to the session -- ";
+    console.log(req.session);
+    return next();
+  });
+
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something went wrong!');
-  });
+});
 // adds routes for navbar
 
 // global error handler
 // function handleError(err, req, res, next){
-//     res.json({err: err});
-// }
+    //     res.json({err: err});
+    // }
+// const isAuthenticated = function isAuthenticated(req,res, next){
+//     if(req.session && req.session.userId) {
+//     return true;
+//     } else {
+//     return false;
+//     }
+// };
+
 app.use(require("./utils/navlinks"));
 /* === Routes === */
 
 // == Default Routes
+// Index
+
 app.use("/", controllers.post);
 app.use("/comments", controllers.comment);
 
@@ -73,3 +98,4 @@ app.use("/auth", controllers.auth);
 app.listen(PORT, function () {
     console.log(`Server is live and listening at localhost:${PORT}.`);
 });
+
