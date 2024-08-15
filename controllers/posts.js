@@ -1,17 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { Post, Comment, User } = require("../models");
-// const isAuthenticated = require('../server');
-
-// base url === /
-
-// const isAuthenticated = function isAuthenticated(req,res, next){
-//     if(req.session && req.session.user) {
-//     return true;
-//     } else {
-//     return false;
-//     }
-// };
+const isAuthenticated = require("../middleware/auth");
 
 router.get("/", async function (req, res, next) {
     console.log(req.session);
@@ -28,7 +18,7 @@ router.get("/", async function (req, res, next) {
 
 
 // Show
-router.get("/:id", function (req, res, next) {
+router.get("/:id", isAuthenticated, function (req, res, next) {
    
     Post.findById(req.params.id, function (error, post) {
 
@@ -61,7 +51,7 @@ router.get("/new", function (req, res) {
 });
 
 // Create
-router.post("/new", async function (req, res, next) {
+router.post("/new", isAuthenticated, async function (req, res, next) {
     if (!req.session.currentUser) res.redirect("auth/login");
     try { // body == data incoming with a request
         const data = req.body;
@@ -78,7 +68,7 @@ router.post("/new", async function (req, res, next) {
 });
 
 // Delete
-router.delete("/:id", function (req, res, next) {
+router.delete("/:id", isAuthenticated, function (req, res, next) {
     Post.findByIdAndDelete(req.params.id, function (error, deletedPost) {
         if (error) {
             console.log(error);
@@ -101,7 +91,7 @@ router.delete("/:id", function (req, res, next) {
 });
   
 // Edit
-router.get("/:id/edit", function (req, res, next) {
+router.get("/:id/edit", isAuthenticated, function (req, res, next) {
     Post.findById(req.params.id, function (error, foundPost) {
         if (error) {
             console.log(error);
@@ -116,7 +106,7 @@ router.get("/:id/edit", function (req, res, next) {
 });
 
 //Update
-router.put("/:id", function (req, res, next) {
+router.put("/:id", isAuthenticated, function (req, res, next) {
     Post.findByIdAndUpdate(
         req.params.id,
         req.body,
