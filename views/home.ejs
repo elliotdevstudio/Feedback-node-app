@@ -5,16 +5,7 @@
 
 <body class="has-navbar-fixed-top">
           <!-- Navbar Partial -->
-          <%- include('./partials/nav', { routes: [
-            {
-              href: "/new",
-              title: "Create Post",
-            },
-          
-          {
-              href: "/login",
-              title: "Login",
-          }, ]}) %>
+          <%- include('./partials/nav', { routes }) %>
 
           <section class="hero is-small has-background is-link">
             <div id="hero-container" class="hero-body">

@@ -51,7 +51,7 @@ router.post("/login", async function (req, res, next) {
         const foundUser = await User.findOne({email: req.body.email});
         // - if user does not exist, redirect to register
         if (!foundUser) {
-            return res.redirect("/signup");
+            return res.render("auth/signup");
         }
         // - if user does exists
         // -- grab the user's hashed password and verify it against the given password

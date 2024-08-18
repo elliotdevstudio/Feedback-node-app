@@ -7,14 +7,13 @@
 <!-- Navbar Partial -->
           <% include('../partials/nav', { routes: [
             {
-              href: "/signup",
-              title: "Sign Up",
+  
             }]} ) %>
 
           <section class="hero is-fullheight-with-navbar is-link">
             <div class="hero-body is-flex-direction-column">
               <h1 class="title">Login</h1>
-              <form action="/login" method="POST" class="box">
+              <form action="/auth/login" method="POST" class="box">
                 <div class="field">
                   <label class="label">
                     <div class="control">

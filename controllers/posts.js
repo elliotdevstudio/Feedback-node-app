@@ -4,16 +4,18 @@ const { Post, Comment, User } = require("../models");
 const isAuthenticated = require("../middleware/auth");
 
 router.get("/", async function (req, res, next) {
-    console.log(req.session);
+    
     try {
         const allPosts = await Post.find({}).populate("user");
         const context = {
             posts: allPosts,
+            routes: res.locals.routes
         };
         return res.render("home", context);
     } catch (error) {
         console.log(error);
     } 
+    
   });
 
 
@@ -41,22 +43,16 @@ router.get("/:id", isAuthenticated, function (req, res, next) {
 });
 
 //create
-router.get("/new", function (req, res) {
-    if(req.session.currentUser){ 
+router.get("/new", isAuthenticated, function (req, res) {
         res.render("posts/new");
-    } else {
-        res.redirect("auth/login");
-    }
-    
 });
 
 // Create
 router.post("/new", isAuthenticated, async function (req, res, next) {
-    if (!req.session.currentUser) res.redirect("auth/login");
     try { // body == data incoming with a request
         const data = req.body;
         console.log(req);
-        data.user = req.session.currentUserser;
+        data.user = req.session.currentUser;
         await Post.create(data);
         console.log("Post successfully created");
         return res.redirect("/");
