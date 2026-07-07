@@ -1,14 +1,14 @@
-const isAuthenticated = require("../middleware/auth");
+const { isAuthenticated } = require("../middleware/auth");
 
 const protectedRoutes = [
     { href: "/", title: "Home"},
     { href: "/new", title: "Create Post"},
-    { href: "/logout", title: "Logout"}
+    { href: "/auth/logout", title: "Logout"}
 ];
 
-const publicRoutes = [ 
-    { href: "/login", title: "Login" },
-    { href: "/signup", title: "Sign Up"}
+const publicRoutes = [
+    { href: "/auth/login", title: "Login" },
+    { href: "/auth/signup", title: "Sign Up"}
 ];
 
 

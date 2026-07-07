@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { Post, Comment, User } = require("../models");
-const isAuthenticated = require("../middleware/auth");
+const { requireAuth }  = require("../middleware/auth");
 
 router.get("/", async function (req, res, next) {
     
@@ -20,7 +20,7 @@ router.get("/", async function (req, res, next) {
 
 
 // Show
-router.get("/:id", isAuthenticated, function (req, res, next) {
+router.get("/:id", requireAuth, function (req, res, next) {
    
     Post.findById(req.params.id, function (error, post) {
 
@@ -43,12 +43,12 @@ router.get("/:id", isAuthenticated, function (req, res, next) {
 });
 
 //create
-router.get("/new", isAuthenticated, function (req, res) {
+router.get("/new", requireAuth, function (req, res) {
         res.render("posts/new");
 });
 
 // Create
-router.post("/new", isAuthenticated, async function (req, res, next) {
+router.post("/new", requireAuth, async function (req, res, next) {
     try { // body == data incoming with a request
         const data = req.body;
         console.log(req);
@@ -64,7 +64,7 @@ router.post("/new", isAuthenticated, async function (req, res, next) {
 });
 
 // Delete
-router.delete("/:id", isAuthenticated, function (req, res, next) {
+router.delete("/:id", requireAuth, function (req, res, next) {
     Post.findByIdAndDelete(req.params.id, function (error, deletedPost) {
         if (error) {
             console.log(error);
@@ -87,7 +87,7 @@ router.delete("/:id", isAuthenticated, function (req, res, next) {
 });
   
 // Edit
-router.get("/:id/edit", isAuthenticated, function (req, res, next) {
+router.get("/:id/edit", requireAuth, function (req, res, next) {
     Post.findById(req.params.id, function (error, foundPost) {
         if (error) {
             console.log(error);
@@ -102,7 +102,7 @@ router.get("/:id/edit", isAuthenticated, function (req, res, next) {
 });
 
 //Update
-router.put("/:id", isAuthenticated, function (req, res, next) {
+router.put("/:id", requireAuth, function (req, res, next) {
     Post.findByIdAndUpdate(
         req.params.id,
         req.body,

@@ -8,7 +8,7 @@ const MongoStore = require("connect-mongo");
 // const rateLimit = require("express-rate-limit");
 // const helmet = require("helmet");
 // const mongoSanitize = require("express-mongo-sanitize");
-// const hpp = require("hpp");
+
 
 //look into MIME sniffing 
 /* === Internal modules === */
@@ -27,6 +27,7 @@ require("./config/db.connection");
 app.set("view engine", "ejs");
 
 app.use(express.json());
+
 // serve public folder
 app.use(express.static("public"));
 
@@ -52,6 +53,7 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 2  // two hours
     }
   }));
+
   // added propety to session for testing
   app.use(function (req, res, next){
     req.session.example = "hello I am an added property to the session -- ";
