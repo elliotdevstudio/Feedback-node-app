@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
         <!-- Head partial -->
-  <% include('../partials/head.ejs', { page: "Create Post" } ) %>
+  <%- include('../partials/head.ejs', { page: "Create Post" } ) %>
 
 <body class="has-navbar-fixed-top">
           <!-- Navbar Partial -->
-          <% include('../partials/nav.ejs', { routes: [
+          <%- include('../partials/nav.ejs', { routes: [
             { 
               href: "/",
               title: "Home",

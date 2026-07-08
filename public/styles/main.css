@@ -18,6 +18,11 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 12px;
+  height: 70px;
+}
+
+body.has-navbar-fixed-top {
+  padding-top: 70px;
 }
 
 section {
@@ -37,6 +42,16 @@ section {
   justify-content: space-between;
   align-items: center;
   gap: 20px;
+}
+
+.navbar-links ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 #hero-container {
