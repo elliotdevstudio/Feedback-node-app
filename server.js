@@ -54,13 +54,6 @@ app.use(session({
     }
   }));
 
-  // added propety to session for testing
-  app.use(function (req, res, next){
-    req.session.example = "hello I am an added property to the session -- ";
-    console.log(req.session);
-    return next();
-  });
-
 
 
 /* === Middleware === */
