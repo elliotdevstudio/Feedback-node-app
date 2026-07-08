@@ -4,10 +4,10 @@ const Comment = require("../models/Comment");
 
 const comments = [
     {
-        type: "Suggestion",
-        content: "Meh. Could use more snakes.",
-        post: "616dc8f845fe8798fa67fb2f",
-        user: "616dc78fd1f477eec038e70c",
+        type: "",
+        content: "",
+        post: "",
+        user: "",
     }
 ];
 
